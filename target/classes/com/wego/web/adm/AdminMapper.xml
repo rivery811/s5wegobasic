@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wego.web.adm.AdminMapper">
+		<select id="countAdmins" resultType="int">
+		SELECT COUNT(*) COUNT FROM ADMIN
+		</select>
+		<select id="selectById" resultType="Admin">
+		select * from admin where EID like #{eid};
+		</select>
+
+	<select id="selectAdmin" resultType="Admin">
+			
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+	  		select * from admin 
+	        where eid like #{eid} 
+	        <if test="eid != null">
+	        and pwd like #{pwd}
+	        </if>
+	         <if test="ename!= null">
+	        and ename!= like #{ename!=}
+	         </if>
+		</trim>    
+    </select>
+		
+</mapper>

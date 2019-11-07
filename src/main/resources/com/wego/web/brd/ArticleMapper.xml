@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wego.web.brd.ArticleMapper">
+
+	 <insert id="insertArticle"  parameterType="com.wego.web.brd.Article">
+        insert into article (title,content,uid,board_type) values (
+            #{title}, #{content}, #{uid}, #{boardType}
+        )
+    </insert>
+    <select id = "countList" resultType = "int">
+    	select count(*)  from article;  
+    </select>
+
+    <select id = "selectAll" resultType = "Article" parameterType = "Proxy">
+		select a.board_type as boardType, a.* from (select * from article
+		order by artseq desc) a
+		limit #{startRow},#{pageSize};
+    	<!-- select a.board_type as boardType ,a.* from article a;   -->
+    </select>
+    <delete id = "deleteContent" parameterType="string">
+    delete from article where artseq like #{artseq};
+    </delete>
+    <update id="updateContent" parameterType = "Article">
+    update article
+	set content =  #{content}
+	where artseq like #{artseq};
+   </update>
+   <select id="selectContent" resultType = "Article">
+   select *  from article where artseq like  #{artseq};
+   </select>
+
+</mapper> 
